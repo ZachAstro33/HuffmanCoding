@@ -1,10 +1,12 @@
 import java.util.*;
 
+// Node structure for the Huffman Tree
 class HuffmanNode {
-    char data;
-    int frequency;
-    HuffmanNode left, right;
+    char data; // Character stored in the node
+    int frequency; // Frequency of the character
+    HuffmanNode left, right; // Left and right children of the node
 
+    // Constructor to initialize node with character and frequency
     HuffmanNode(char data, int frequency) {
         this.data = data;
         this.frequency = frequency;
@@ -14,24 +16,28 @@ class HuffmanNode {
 
 public class HuffmanCoding {
 
-    // Build Huffman Tree recursively
+    // Function to recursively build Huffman Tree from frequency map
     public static HuffmanNode buildHuffmanTree(Map<Character, Integer> freqMap) {
+        // Priority queue to store nodes based on their frequencies
         PriorityQueue<HuffmanNode> pq = new PriorityQueue<>((a, b) -> a.frequency - b.frequency);
 
-        // Create a leaf node for each character and add it to the priority queue
+        // Create leaf nodes for each character and add them to the priority queue
         for (Map.Entry<Character, Integer> entry : freqMap.entrySet()) {
             pq.offer(new HuffmanNode(entry.getKey(), entry.getValue()));
         }
 
+        // Recursive helper function to build the tree
         return buildTreeHelper(pq);
     }
 
+    // Recursive helper function to build Huffman Tree from priority queue
     private static HuffmanNode buildTreeHelper(PriorityQueue<HuffmanNode> pq) {
+        // If there is only one node in the queue, it becomes the root of the tree
         if (pq.size() == 1) {
             return pq.poll();
         }
 
-        // Take the two nodes with the lowest frequency
+        // Take the two nodes with the lowest frequencies
         HuffmanNode left = pq.poll();
         HuffmanNode right = pq.poll();
 
@@ -43,11 +49,13 @@ public class HuffmanCoding {
         // Add the new internal node back to the priority queue
         pq.offer(internalNode);
 
+        // Recursively build the rest of the tree
         return buildTreeHelper(pq);
     }
 
-    // Traverse the Huffman Tree and generate codes for each character
+    // Recursive function to generate Huffman codes for each character
     public static void generateCodes(HuffmanNode root, String code, Map<Character, String> codes) {
+        // If the node is null, return
         if (root == null) return;
 
         // If the node is a leaf, store the code for the character
@@ -71,7 +79,7 @@ public class HuffmanCoding {
         // Step 2: Build Huffman Tree recursively
         HuffmanNode root = buildHuffmanTree(freqMap);
 
-        // Step 3: Generate Huffman Codes
+        // Step 3: Generate Huffman Codes recursively
         Map<Character, String> codes = new HashMap<>();
         generateCodes(root, "", codes);
 
@@ -84,6 +92,7 @@ public class HuffmanCoding {
         return encoded.toString();
     }
 
+    // Main method to test the Huffman coding algorithm
     public static void main(String[] args) {
         String input = "Huffman coding is a data compression algorithm";
         String encoded = encode(input);
