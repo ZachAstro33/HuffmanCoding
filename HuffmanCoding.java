@@ -13,7 +13,8 @@ class HuffmanNode {
 }
 
 public class HuffmanCoding {
-    // Build Huffman Tree and return the root
+
+    // Build Huffman Tree recursively
     public static HuffmanNode buildHuffmanTree(Map<Character, Integer> freqMap) {
         PriorityQueue<HuffmanNode> pq = new PriorityQueue<>((a, b) -> a.frequency - b.frequency);
 
@@ -22,23 +23,27 @@ public class HuffmanCoding {
             pq.offer(new HuffmanNode(entry.getKey(), entry.getValue()));
         }
 
-        // Build the Huffman Tree
-        while (pq.size() > 1) {
-            // Take the two nodes with the lowest frequency
-            HuffmanNode left = pq.poll();
-            HuffmanNode right = pq.poll();
+        return buildTreeHelper(pq);
+    }
 
-            // Create a new internal node with these two nodes as children
-            HuffmanNode internalNode = new HuffmanNode('\0', left.frequency + right.frequency);
-            internalNode.left = left;
-            internalNode.right = right;
-
-            // Add the new internal node back to the priority queue
-            pq.offer(internalNode);
+    private static HuffmanNode buildTreeHelper(PriorityQueue<HuffmanNode> pq) {
+        if (pq.size() == 1) {
+            return pq.poll();
         }
 
-        // Return the root of the Huffman Tree
-        return pq.poll();
+        // Take the two nodes with the lowest frequency
+        HuffmanNode left = pq.poll();
+        HuffmanNode right = pq.poll();
+
+        // Create a new internal node with these two nodes as children
+        HuffmanNode internalNode = new HuffmanNode('\0', left.frequency + right.frequency);
+        internalNode.left = left;
+        internalNode.right = right;
+
+        // Add the new internal node back to the priority queue
+        pq.offer(internalNode);
+
+        return buildTreeHelper(pq);
     }
 
     // Traverse the Huffman Tree and generate codes for each character
@@ -63,7 +68,7 @@ public class HuffmanCoding {
             freqMap.put(c, freqMap.getOrDefault(c, 0) + 1);
         }
 
-        // Step 2: Build Huffman Tree
+        // Step 2: Build Huffman Tree recursively
         HuffmanNode root = buildHuffmanTree(freqMap);
 
         // Step 3: Generate Huffman Codes
