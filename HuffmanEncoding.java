@@ -58,18 +58,27 @@ public class HuffmanEncoding {
     scanner.close();
   }
 
+  // Recursive apporach.
   public static void generateCodes(
     HuffmanNode root,
     String code,
     SimpleHashMap<Character, String> codes
   ) {
     if (root == null) return;
-    if (root.data != '\0') {
+
+    // If the node is a leaf node, or if it's the only node (root with no children), assign a code
+    if (root.left == null && root.right == null) {
+      // If the tree has only one node, we still need to encode it. Assign "0" if no code has been assigned.
+      if (code.isEmpty()) {
+        code = "0";
+      }
       codes.put(root.data, code);
-      // Debug output is already being printed in generateCodes
+      System.out.println("Character: " + root.data + ", Code: " + code);
+    } else {
+      // Traverse left and right
+      generateCodes(root.left, code + "0", codes);
+      generateCodes(root.right, code + "1", codes);
     }
-    generateCodes(root.left, code + "0", codes);
-    generateCodes(root.right, code + "1", codes);
   }
 
   // Method to print character frequencies

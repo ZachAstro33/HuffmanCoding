@@ -48,7 +48,7 @@ public class TestHuffmanEncoding {
   }
 
   public static void main(String[] args) {
-    String input = "a";
+    String input = "pussypp";
     SimpleMap freqMap = new SimpleMap(256);
     for (char c : input.toCharArray()) {
       freqMap.put(c, freqMap.getOrDefault(c, 0) + 1);
