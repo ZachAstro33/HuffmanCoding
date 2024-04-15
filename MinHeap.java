@@ -40,11 +40,11 @@ class MinHeap {
     HuffmanNode root = heap[0];
     heap[0] = heap[size - 1];
     size--;
-    bubbleDown();
+    sink();
     return root;
   }
 
-  private void bubbleDown() {
+  private void sink() {
     int index = 0;
     while (index < size / 2) {
       int leftChildIndex = 2 * index + 1;
