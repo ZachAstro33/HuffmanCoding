@@ -1,11 +1,10 @@
-// Node structure for the Huffman Tree
 class HuffmanNode {
 
-  char data; // Character stored in the node
-  int frequency; // Frequency of the character
-  HuffmanNode left, right; // Left and right children of the node
+  char data; 
+  int frequency; 
+  HuffmanNode left, right; 
 
-  // Constructor to initialize node with character and frequency
+  
   HuffmanNode(char data, int frequency) {
     this.data = data;
     this.frequency = frequency;
@@ -16,12 +15,11 @@ class HuffmanNode {
 
 public class TestHuffmanEncoding {
 
-  public static HuffmanNode buildHuffmanTree(SimpleMap freqMap) {
-    MinHeap pq = new MinHeap(256); // Assume ASCII
+  public static HuffmanNode buildHuffmanTree(FrequencyHashMap freqMap) {
+    MinHeap pq = new MinHeap(256); 
 
-    // Iterate over entries
-    SimpleMap.Entry[] entries = freqMap.entrySet();
-    for (SimpleMap.Entry entry : entries) {
+    FrequencyHashMap.Entry[] entries = freqMap.entrySet();
+    for (FrequencyHashMap.Entry entry : entries) {
       if (entry != null) {
         while (entry != null) {
           pq.add(new HuffmanNode(entry.key, entry.value));
@@ -48,14 +46,14 @@ public class TestHuffmanEncoding {
   }
 
   public static void main(String[] args) {
-    String input = "pussypp";
-    SimpleMap freqMap = new SimpleMap(256);
+    String input = "";
+    FrequencyHashMap freqMap = new FrequencyHashMap(256);
     for (char c : input.toCharArray()) {
       freqMap.put(c, freqMap.getOrDefault(c, 0) + 1);
     }
 
     HuffmanNode root = buildHuffmanTree(freqMap);
-    SimpleHashMap<Character, String> codes = new SimpleHashMap<>(256);
+    CodeHashMap<Character, String> codes = new CodeHashMap<>(256);
     generateCodes(root, "", codes);
 
     StringBuilder encoded = new StringBuilder();
@@ -66,24 +64,20 @@ public class TestHuffmanEncoding {
     System.out.println("Encoded: " + encoded);
   }
 
-  // Recursive apporach.
   public static void generateCodes(
     HuffmanNode root,
     String code,
-    SimpleHashMap<Character, String> codes
+    CodeHashMap<Character, String> codes
   ) {
     if (root == null) return;
 
-    // If the node is a leaf node, or if it's the only node (root with no children), assign a code
     if (root.left == null && root.right == null) {
-      // If the tree has only one node, we still need to encode it. Assign "0" if no code has been assigned.
       if (code.isEmpty()) {
         code = "0";
       }
       codes.put(root.data, code);
       System.out.println("Character: " + root.data + ", Code: " + code);
     } else {
-      // Traverse left and right
       generateCodes(root.left, code + "0", codes);
       generateCodes(root.right, code + "1", codes);
     }

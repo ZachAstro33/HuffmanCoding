@@ -36,13 +36,13 @@ public class Test1 {
   }
 
   private static void performTest(String input, String expected) {
-    SimpleMap freqMap = new SimpleMap(256);
+    FrequencyHashMap freqMap = new FrequencyHashMap(256);
     for (char c : input.toCharArray()) {
       freqMap.put(c, freqMap.getOrDefault(c, 0) + 1);
     }
 
     HuffmanNode root = TestHuffmanEncoding.buildHuffmanTree(freqMap);
-    SimpleHashMap<Character, String> codes = new SimpleHashMap<>(256);
+    CodeHashMap<Character, String> codes = new CodeHashMap<>(256);
     TestHuffmanEncoding.generateCodes(root, "", codes);
 
     StringBuilder encoded = new StringBuilder();
