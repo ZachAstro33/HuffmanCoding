@@ -8,7 +8,7 @@ class SimpleMap {
 
   static class Entry {
 
-    final char key;
+    char key;
     int value;
     Entry next;
 
