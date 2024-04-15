@@ -41,9 +41,9 @@ public class Test1 {
       freqMap.put(c, freqMap.getOrDefault(c, 0) + 1);
     }
 
-    HuffmanNode root = HuffmanCoding.buildHuffmanTree(freqMap);
+    HuffmanNode root = TestHuffmanEncoding.buildHuffmanTree(freqMap);
     SimpleHashMap<Character, String> codes = new SimpleHashMap<>(256);
-    HuffmanCoding.generateCodes(root, "", codes);
+    TestHuffmanEncoding.generateCodes(root, "", codes);
 
     StringBuilder encoded = new StringBuilder();
     for (char c : input.toCharArray()) {
