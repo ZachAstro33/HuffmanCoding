@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 // Node structure for the Huffman Tree
 class HuffmanNode {
 
@@ -16,7 +14,7 @@ class HuffmanNode {
   }
 }
 
-public class HuffmanCoding {
+public class TestHuffmanEncoding {
 
   public static HuffmanNode buildHuffmanTree(SimpleMap freqMap) {
     MinHeap pq = new MinHeap(256); // Assume ASCII
